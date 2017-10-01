@@ -3,29 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>T</title>
-</head>
-<body>
-<h1 class="title"></h1>
-<table class="responstable">
-    <tbody>
-    <tr>
-        <th>Date</th>
-        <th>Rank</th>
-        <th>Colour</th>
-        <th>Weight</th>
-    </tr>
+    <script>window.d3 = d3 = require('d3');</script>
+    <script src="public/js/liquidFillGauge.js"></script>
+    <style>
+        html, body {
+            background: rgba(0, 0, 0, 0);
+        }
 
-    <tr>
-        <td class="date"></td>
-        <td class="rank"></td>
-        <td class="color"></td>
-        <td class="weight"></td>
-    </tr>
-    </tbody>
-</table>
-<img src="" alt="" class="tmb">
+        .liquidFillGaugeText {
+            font-family: Helvetica, sans-serif;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="-webkit-app-region: drag">
+<h1 class="title"></h1>
+<svg id="gauge" width="97%" height="250"></svg>
 </body>
 
 <script>require('./renderer.js')</script>
-<script>window.$ = window.jQuery = require('jquery');</script>
 </html>
