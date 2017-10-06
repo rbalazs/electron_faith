@@ -2,7 +2,7 @@
 
     document.onreadystatechange = function () {
 
-        if (document.readyState == "complete") {
+        if (document.readyState === "complete") {
             let value = 100;
             let config1 = liquidFillGaugeDefaultSettings();
             config1.circleThickness = 0.2;
@@ -31,7 +31,7 @@
 
 
             document.body.onkeyup = function (e) {
-                if (e.keyCode == 32) {
+                if (e.keyCode === 32) {
                     value = 100;
                     gauge.update(value);
                 }

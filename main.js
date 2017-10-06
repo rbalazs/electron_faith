@@ -1,6 +1,6 @@
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const {app, globalShortcut} = require('electron');
+
+const BrowserWindow = require('electron').BrowserWindow;
 
 const path = require('path');
 const url = require('url');
@@ -21,10 +21,14 @@ function createWindow() {
     }));
 
     // devtools.
-    // mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function () {
         mainWindow = null
+    });
+
+    globalShortcut.register('CommandOrControl+D', () => {
+        mainWindow.close();
     })
 }
 
