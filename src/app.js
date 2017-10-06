@@ -15,45 +15,79 @@ let Application = function () {
     this.value = 100;
 
     /**
-     * Provides the response.
+     * @type {undefined|GaugeUpdater}
+     */
+    this.gauge = undefined;
+
+    /**
+     * @type {number}
+     */
+    this.minDelay = 2100;
+
+    /**
+     * @type {number}
+     */
+    this.maxDelay = 14000;
+
+    /**
+     * Execute applications main logic.
      */
     this.execute = function () {
-        let gauge = loadLiquidFillGauge("gauge", 28, self.getConfig());
+        // Init gauge.
+        self.gauge = loadLiquidFillGauge("gauge", 28, self.getConfig());
+        self.gauge.update(self.value);
 
-        gauge.update(self.value);
-
-        let callback = function () {
-            self.value -= Math.floor(Math.random() * 6) + 1;
-            self.value = self.value < 0 ? 0 : self.value;
-
-            gauge.update(self.value);
-
-            setTimeout(function () {
-                callback()
-            }, (Math.random() * (14000 - 2500) + 2500) + (self.value + 50) * 100);
-        };
-
+        // Start ticking.
         setTimeout(function () {
-            callback();
-        }, 2100);
+            self.tick();
+        }, self.minDelay);
 
+        // Reload on Spacebar.
         document.body.onkeyup = function (e) {
             if (e.keyCode === 32) {
                 self.value = 100;
-                gauge.update(self.value);
+                self.gauge.update(self.value);
             }
         }
     };
 
+    /**
+     * Recursive setTimeout tick.
+     */
+    this.tick = function () {
+        self.value -= Math.floor(Math.random() * 6) + 1;
+        self.value = self.value < 0 ? 0 : self.value;
+
+        self.gauge.update(self.value);
+
+        setTimeout(function () {
+            self.tick()
+        }, self.getDelay());
+    };
+
+    /**
+     * @returns {number}
+     */
+    this.getDelay = function () {
+        return (Math.random() * (self.maxDelay - self.minDelay) + self.minDelay) + (self.value + 50) * 100;
+    };
+
+    /**
+     * @returns {{minValue, maxValue, circleThickness, circleFillGap,
+     * circleColor, waveHeight, waveCount, waveRiseTime, waveAnimateTime,
+     * waveRise, waveHeightScaling, waveAnimate, waveColor,
+     * waveOffset, textVertPosition, textSize,
+     * valueCountUp, displayPercent, textColor, waveTextColor}|*}
+     */
     this.getConfig = function () {
-        let config1 = liquidFillGaugeDefaultSettings();
+        let config = liquidFillGaugeDefaultSettings();
 
-        config1.circleThickness = 0.2;
-        config1.textVertPosition = 0.3;
-        config1.waveAnimateTime = 1000;
-        config1.textSize = 0.6;
+        config.circleThickness = 0.2;
+        config.textVertPosition = 0.3;
+        config.waveAnimateTime = 1000;
+        config.textSize = 0.6;
 
-        return config1;
+        return config;
     };
 };
 
