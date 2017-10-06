@@ -2,8 +2,10 @@
 
 /**
  * @constructor
+ *
+ * @param {Moment} moment
  */
-let Application = function () {
+let Application = function (moment) {
     /**
      * @type {Application}
      */
@@ -22,12 +24,17 @@ let Application = function () {
     /**
      * @type {number}
      */
-    this.minDelay = 2100;
+    this.minDelay = 2000;
 
     /**
      * @type {number}
      */
-    this.maxDelay = 14000;
+    this.maxDelay = 10000;
+
+    /**
+     * @type {undefined|Date}
+     */
+    this.momentOfZeroValue = undefined;
 
     /**
      * Execute applications main logic.
@@ -35,7 +42,7 @@ let Application = function () {
     this.execute = function () {
         // Init gauge.
         self.gauge = loadLiquidFillGauge("gauge", 28, self.getConfig());
-        self.gauge.update(self.value);
+        self.gauge.update(self.value, self.value);
 
         // Start ticking.
         setTimeout(function () {
@@ -47,6 +54,7 @@ let Application = function () {
             if (e.keyCode === 32) {
                 self.value = 100;
                 self.gauge.update(self.value);
+                self.momentOfZeroValue = undefined;
             }
         }
     };
@@ -56,7 +64,19 @@ let Application = function () {
      */
     this.tick = function () {
         self.value -= Math.floor(Math.random() * 6) + 1;
-        self.value = self.value < 0 ? 0 : self.value;
+
+        if (self.value <= 0) {
+            self.value = 0;
+            if (typeof self.momentOfZeroValue === 'undefined') {
+                self.momentOfZeroValue = moment.now();
+            }
+        }
+
+        if (typeof self.momentOfZeroValue !== 'undefined') {
+            document.getElementsByClassName("title")[0].innerHTML = moment(self.momentOfZeroValue).fromNow();
+        } else {
+            document.getElementsByClassName("title")[0].innerHTML = "";
+        }
 
         self.gauge.update(self.value);
 
@@ -69,6 +89,10 @@ let Application = function () {
      * @returns {number}
      */
     this.getDelay = function () {
+        if (self.value <= 0) {
+            return 1000;
+        }
+
         return (Math.random() * (self.maxDelay - self.minDelay) + self.minDelay) + (self.value + 50) * 100;
     };
 
