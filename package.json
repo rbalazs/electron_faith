@@ -1,11 +1,11 @@
 {
   "name": "electron_faith",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager ./ Inii --all --out ~/Desktop/Faith --version 0.0.2 --overwrite"
+    "package": "electron-packager ./ Inii --all --out ~/Desktop/Faith --version 0.0.3 --overwrite"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -15,11 +15,11 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "~1.6.2",
-    "electron-packager": "^9.1.0",
-    "moment": "^2.18.1"
+    "electron-packager": "^9.1.0"
   },
   "dependencies": {
     "google-images": "^2.1.0",
-    "d3": "3.*"
+    "d3": "3.*",
+    "moment": "^2.18.1"
   }
 }
