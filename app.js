@@ -1,4 +1,4 @@
-import Application from './src/app';
+import Application from './src/Application';
 
 (() => {
         document.onreadystatechange = () => {
