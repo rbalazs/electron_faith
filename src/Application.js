@@ -103,8 +103,6 @@ let Application = function (moment) {
      */
     this.getConfig = () => {
         return {
-            minValue: 0,
-            maxValue: 100,
             circleThickness: 0.2,
             circleFillGap: 0.05,
             circleColor: "#178BCA",

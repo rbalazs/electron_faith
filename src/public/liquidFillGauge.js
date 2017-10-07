@@ -5,7 +5,7 @@ function loadLiquidFillGauge(elementId, value, config) {
     const radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
     const locationX = parseInt(gauge.style("width")) / 2 - radius;
     const locationY = parseInt(gauge.style("height")) / 2 - radius;
-    const fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
+    const fillPercent = Math.max(0, Math.min(100, value)) / 100;
 
     let waveHeightScale;
         waveHeightScale = d3.scale.linear()
@@ -14,7 +14,7 @@ function loadLiquidFillGauge(elementId, value, config) {
 
     const textPixels = (config.textSize * radius / 2);
     const textFinalValue = parseFloat(value).toFixed(2);
-    const textStartValue = config.valueCountUp ? config.minValue : textFinalValue;
+    const textStartValue = config.valueCountUp ? 0 : textFinalValue;
     const percentText = config.displayPercent ? "%" : "";
     const circleThickness = config.circleThickness * radius;
     const circleFillGap = config.circleFillGap * radius;
@@ -181,7 +181,7 @@ function loadLiquidFillGauge(elementId, value, config) {
                 .duration(config.waveRiseTime)
                 .tween("text", textTween);
 
-            const fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
+            const fillPercent = Math.max(0, Math.min(100, value)) / 100;
             const waveHeight = fillCircleRadius * waveHeightScale(fillPercent * 100);
             const waveRiseScale = d3.scale.linear()
                 .range([(fillCircleMargin + fillCircleRadius * 2 + waveHeight), (fillCircleMargin - waveHeight)])
