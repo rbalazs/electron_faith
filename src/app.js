@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * @constructor
  *
@@ -39,18 +37,18 @@ let Application = function (moment) {
     /**
      * Execute applications main logic.
      */
-    this.execute = function () {
+    this.execute = () => {
         // Init gauge.
         self.gauge = loadLiquidFillGauge("gauge", 28, self.getConfig());
         self.gauge.update(self.value, self.value);
 
         // Start ticking.
-        setTimeout(function () {
+        setTimeout(() => {
             self.tick();
         }, self.minDelay);
 
         // Reload on Spacebar.
-        document.body.onkeyup = function (e) {
+        document.body.onkeyup = e => {
             if (e.keyCode === 32) {
                 self.value = 100;
                 self.gauge.update(self.value);
@@ -62,7 +60,7 @@ let Application = function (moment) {
     /**
      * Recursive setTimeout tick.
      */
-    this.tick = function () {
+    this.tick = () => {
         self.value -= Math.floor(Math.random() * 6) + 1;
 
         if (self.value <= 0) {
@@ -80,7 +78,7 @@ let Application = function (moment) {
 
         self.gauge.update(self.value);
 
-        setTimeout(function () {
+        setTimeout(() => {
             self.tick()
         }, self.getDelay());
     };
@@ -88,7 +86,7 @@ let Application = function (moment) {
     /**
      * @returns {number}
      */
-    this.getDelay = function () {
+    this.getDelay = () => {
         if (self.value <= 0) {
             return 1000;
         }
@@ -103,7 +101,7 @@ let Application = function (moment) {
      * waveOffset, textVertPosition, textSize,
      * valueCountUp, displayPercent, textColor, waveTextColor}|*}
      */
-    this.getConfig = function () {
+    this.getConfig = () => {
         let config = liquidFillGaugeDefaultSettings();
 
         config.circleThickness = 0.2;
@@ -115,4 +113,4 @@ let Application = function (moment) {
     };
 };
 
-module.exports = Application;
+export default Application;
