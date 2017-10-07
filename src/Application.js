@@ -22,12 +22,12 @@ let Application = function (moment) {
     /**
      * @type {number}
      */
-    this.minDelay = 100;
+    this.minDelay = 1000;
 
     /**
      * @type {number}
      */
-    this.maxDelay = 1000;
+    this.maxDelay = 21000;
 
     /**
      * @type {undefined|Date}
