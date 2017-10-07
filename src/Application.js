@@ -102,14 +102,27 @@ let Application = function (moment) {
      * valueCountUp, displayPercent, textColor, waveTextColor}|*}
      */
     this.getConfig = () => {
-        let config = liquidFillGaugeDefaultSettings();
-
-        config.circleThickness = 0.2;
-        config.textVertPosition = 0.3;
-        config.waveAnimateTime = 1000;
-        config.textSize = 0.6;
-
-        return config;
+        return {
+            minValue: 0,
+            maxValue: 100,
+            circleThickness: 0.2,
+            circleFillGap: 0.05,
+            circleColor: "#178BCA",
+            waveHeight: 0.05,
+            waveCount: 1,
+            waveRiseTime: 1000,
+            waveAnimateTime: 1000,
+            waveRise: true,
+            waveAnimate: true,
+            waveColor: "#178BCA",
+            waveOffset: 0,
+            textVertPosition: 0.3,
+            textSize: 0.6,
+            valueCountUp: true,
+            displayPercent: true,
+            textColor: "#045681",
+            waveTextColor: "#A4DBf8"
+        };
     };
 };
 

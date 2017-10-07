@@ -1,29 +1,5 @@
 import d3 from 'd3';
 
-function liquidFillGaugeDefaultSettings() {
-    return {
-        minValue: 0,
-        maxValue: 100,
-        circleThickness: 0.05,
-        circleFillGap: 0.05,
-        circleColor: "#178BCA",
-        waveHeight: 0.05,
-        waveCount: 1,
-        waveRiseTime: 1000,
-        waveAnimateTime: 18000,
-        waveRise: true,
-        waveAnimate: true,
-        waveColor: "#178BCA",
-        waveOffset: 0,
-        textVertPosition: .5,
-        textSize: 1,
-        valueCountUp: true,
-        displayPercent: true,
-        textColor: "#045681",
-        waveTextColor: "#A4DBf8"
-    };
-}
-
 function loadLiquidFillGauge(elementId, value, config) {
     const gauge = d3.select(`#${elementId}`);
     const radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
