@@ -22,12 +22,12 @@ let Application = function (moment) {
     /**
      * @type {number}
      */
-    this.minDelay = 2000;
+    this.minDelay = 100;
 
     /**
      * @type {number}
      */
-    this.maxDelay = 10000;
+    this.maxDelay = 1000;
 
     /**
      * @type {undefined|Date}
@@ -91,7 +91,7 @@ let Application = function (moment) {
             return 1000;
         }
 
-        return (Math.random() * (self.maxDelay - self.minDelay) + self.minDelay) + (self.value + 50) * 100;
+        return (Math.random() * (self.maxDelay - self.minDelay) + self.minDelay)/* + (self.value + 50) * 100*/;
     };
 
     /**

@@ -12,7 +12,6 @@ function liquidFillGaugeDefaultSettings() {
         waveRiseTime: 1000,
         waveAnimateTime: 18000,
         waveRise: true,
-        waveHeightScaling: true,
         waveAnimate: true,
         waveColor: "#178BCA",
         waveOffset: 0,
@@ -35,15 +34,9 @@ function loadLiquidFillGauge(elementId, value, config) {
     const fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
 
     let waveHeightScale;
-    if (config.waveHeightScaling) {
         waveHeightScale = d3.scale.linear()
             .range([0, config.waveHeight, 0])
             .domain([0, 50, 100]);
-    } else {
-        waveHeightScale = d3.scale.linear()
-            .range([config.waveHeight, config.waveHeight])
-            .domain([0, 100]);
-    }
 
     const textPixels = (config.textSize * radius / 2);
     const textFinalValue = parseFloat(value).toFixed(2);
@@ -223,14 +216,10 @@ function loadLiquidFillGauge(elementId, value, config) {
             const waveScaleX = d3.scale.linear().range([0, waveClipWidth]).domain([0, 1]);
             const waveScaleY = d3.scale.linear().range([0, waveHeight]).domain([0, 1]);
             let newClipArea;
-            if (config.waveHeightScaling) {
-                newClipArea = d3.svg.area()
-                    .x(d => waveScaleX(d.x))
-                    .y0(d => waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI)))
-                    .y1(d => fillCircleRadius * 2 + waveHeight);
-            } else {
-                newClipArea = clipArea;
-            }
+            newClipArea = d3.svg.area()
+                .x(d => waveScaleX(d.x))
+                .y0(d => waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI)))
+                .y1(d => fillCircleRadius * 2 + waveHeight);
 
             const newWavePosition = config.waveAnimate ? waveAnimateScale(1) : 0;
             wave.transition()
