@@ -22,12 +22,12 @@ let Application = function (moment) {
     /**
      * @type {number}
      */
-    this.minDelay = 1000;
+    this.minDelay = 1100;
 
     /**
      * @type {number}
      */
-    this.maxDelay = 21000;
+    this.maxDelay = 22000;
 
     /**
      * @type {undefined|Date}
@@ -39,7 +39,7 @@ let Application = function (moment) {
      */
     this.execute = () => {
         // Init gauge.
-        self.gauge = loadLiquidFillGauge("gauge", 28, self.getConfig());
+        self.gauge = toGauge("gauge", self.getConfig());
         self.gauge.update(self.value, self.value);
 
         // Start ticking.

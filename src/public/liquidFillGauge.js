@@ -1,26 +1,25 @@
 import d3 from 'd3';
 
-function loadLiquidFillGauge(elementId, value, config) {
-    const gauge = d3.select(`#${elementId}`);
-    const radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
-    const locationX = parseInt(gauge.style("width")) / 2 - radius;
-    const locationY = parseInt(gauge.style("height")) / 2 - radius;
-    const fillPercent = Math.max(0, Math.min(100, value)) / 100;
-
+function toGauge(elementId, config) {
+    const widget = d3.select(`#${elementId}`);
+    const radius = Math.min(parseInt(widget.style("width")), parseInt(widget.style("height"))) / 2;
+    const locationX = parseInt(widget.style("width")) / 2 - radius;
+    const locationY = parseInt(widget.style("height")) / 2 - radius;
     let waveHeightScale;
-        waveHeightScale = d3.scale.linear()
-            .range([0, config.waveHeight, 0])
-            .domain([0, 50, 100]);
+
+    waveHeightScale = d3.scale.linear()
+        .range([0, config.waveHeight, 0])
+        .domain([0, 50, 100]);
 
     const textPixels = (config.textSize * radius / 2);
-    const textFinalValue = parseFloat(value).toFixed(2);
+    const textFinalValue = parseFloat(100).toFixed(2);
     const textStartValue = config.valueCountUp ? 0 : textFinalValue;
     const percentText = config.displayPercent ? "%" : "";
     const circleThickness = config.circleThickness * radius;
     const circleFillGap = config.circleFillGap * radius;
     const fillCircleMargin = circleThickness + circleFillGap;
     const fillCircleRadius = radius - fillCircleMargin;
-    const waveHeight = fillCircleRadius * waveHeightScale(fillPercent * 100);
+    const waveHeight = fillCircleRadius * waveHeightScale(100);
 
     const waveLength = fillCircleRadius * 2 / config.waveCount;
     const waveClipCount = 1 + config.waveCount;
@@ -56,7 +55,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         .range([fillCircleMargin + fillCircleRadius * 2, (fillCircleMargin + textPixels * 0.7)])
         .domain([0, 1]);
 
-    const gaugeGroup = gauge.append("g")
+    const gaugeGroup = widget.append("g")
         .attr('transform', `translate(${locationX},${locationY})`);
 
     const gaugeCircleArc = d3.svg.arc()
@@ -125,12 +124,12 @@ function loadLiquidFillGauge(elementId, value, config) {
         waveGroup.attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(0)})`)
             .transition()
             .duration(config.waveRiseTime)
-            .attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(fillPercent)})`)
+            .attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(1)})`)
             .each("start", () => {
                 wave.attr('transform', 'translate(1,0)');
             }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
     } else {
-        waveGroup.attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(fillPercent)})`);
+        waveGroup.attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(1)})`);
     }
 
     if (config.waveAnimate) animateWave();
@@ -150,7 +149,7 @@ function loadLiquidFillGauge(elementId, value, config) {
 
     function GaugeUpdater() {
         this.update = value => {
-            const gaugeGroup = gauge[0][0].firstChild;
+            const gaugeGroup = widget[0][0].firstChild;
 
             if (value >= 41) {
                 gaugeGroup.firstChild.style.fill = "#178BCA"
