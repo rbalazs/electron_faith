@@ -127,7 +127,7 @@ function toGauge(elementId, config) {
             .attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(1)})`)
             .each("start", () => {
                 wave.attr('transform', 'translate(1,0)');
-            }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
+            }); 
     } else {
         waveGroup.attr('transform', `translate(${waveGroupXPosition},${waveRiseScale(1)})`);
     }
