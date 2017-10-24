@@ -1,1 +1,1 @@
-# electron_faith
+# General purpose Electron framework boilerplate code.
