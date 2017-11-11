@@ -22,12 +22,7 @@ let Application = function (moment) {
     /**
      * @type {number}
      */
-    this.minDelay = 1100;
-
-    /**
-     * @type {number}
-     */
-    this.maxDelay = 22000;
+    this.speed = 0.2;
 
     /**
      * @type {undefined|Date}
@@ -87,11 +82,14 @@ let Application = function (moment) {
      * @returns {number}
      */
     this.getDelay = () => {
+        let maxDelay = self.speed * 10000;
+        let minDelay = self.speed * 1000;
+
         if (self.value <= 0) {
             return 1000;
         }
 
-        return (Math.random() * (self.maxDelay - self.minDelay) + self.minDelay)/* + (self.value + 50) * 100*/;
+        return (Math.random() * (maxDelay - minDelay) + minDelay);
     };
 
     /**
