@@ -1,0 +1,8 @@
+html, body {
+    background: rgba(0, 0, 0, 0);
+}
+
+.liquidFillGaugeText {
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+}
