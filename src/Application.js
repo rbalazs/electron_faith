@@ -40,7 +40,7 @@ let Application = function (moment) {
         // Start ticking.
         setTimeout(() => {
             self.tick();
-        }, self.minDelay);
+        }, self.speed * 1000);
 
         // Reload on Spacebar.
         document.body.onkeyup = e => {
