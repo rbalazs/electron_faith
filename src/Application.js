@@ -42,14 +42,25 @@ let Application = function (moment) {
             self.tick();
         }, self.speed * 1000);
 
-        // Reload on Spacebar.
+        // Shortcuts.
         document.body.onkeyup = e => {
+            // Reload on Spacebar.
             if (e.keyCode === 32) {
                 self.value = 100;
                 self.gauge.update(self.value);
                 self.momentOfZeroValue = undefined;
             }
-        }
+            // Slow down on Bottom arrow.
+            if (e.keyCode === 40) {
+                self.speed = self.speed + 0.1;
+                console.log(self.speed);
+            }
+            // Speed up on Up arrow.
+            if (e.keyCode === 38) {
+                self.speed = self.speed > 0.2 ? self.speed - 0.1 : 0.2;
+                console.log(self.speed);
+            }
+        };
     };
 
     /**
