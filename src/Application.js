@@ -104,11 +104,13 @@ let Application = function (moment) {
     };
 
     /**
-     * @returns {{minValue, maxValue, circleThickness, circleFillGap,
+     * @returns {
+     * {minValue, maxValue, circleThickness, circleFillGap,
      * circleColor, waveHeight, waveCount, waveRiseTime, waveAnimateTime,
      * waveRise, waveHeightScaling, waveAnimate, waveColor,
      * waveOffset, textVertPosition, textSize,
-     * valueCountUp, displayPercent, textColor, waveTextColor}|*}
+     * valueCountUp, displayPercent, textColor, waveTextColor}
+     * |*}
      */
     this.getConfig = () => {
         return {
